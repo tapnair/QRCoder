@@ -1,0 +1,4 @@
+Install 3rd party libraries, such as requests, to this directory.
+
+See documentation here for more information on using 3rd party libraries:
+https://apper.readthedocs.io/en/latest/usage/3rd_party_libraries.html

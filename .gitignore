@@ -1,0 +1,8 @@
+__pycache__/
+.idea/
+.vscode/
+.DS_STORE
+.DS_Store
+venv
+lib/*
+!lib/Place_3rd_Party_libraries_here.txt
