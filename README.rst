@@ -13,6 +13,7 @@ You can either generate a QR code from an input string with various options or y
 Create QR Code
 ^^^^^^^^^^^^^^
 This command will generate a QR code from the input message.  It is based on the **PyQRCode** Package.
+
 See the `full PyQRCode documentation <https://pythonhosted.org/PyQRCode/>`_
 for a detailed description of the available encoding options.
 
