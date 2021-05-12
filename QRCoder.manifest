@@ -1,13 +1,11 @@
-
-
 {
-	"autodeskProduct":	"Fusion360",
-	"type":	"addin",
-	"id":	"replace_me",
-	"author":	"Patrick Rainsberry",
-	"description": "QR  Code Generator for Fusion 360",
-	"version":	"0.1.0",
-	"runOnStartup":	false,
-	"supportedOS":	"windows|mac",
-	"editEnabled":	true
+    "autodeskProduct": "Fusion360",
+    "type": "addin",
+    "id": "d298043c-6095-457d-986c-a50a01329ccf",
+    "author": "Patrick Rainsberry",
+    "description": "QR  Code Generator for Fusion 360",
+    "version": "0.1.0",
+    "runOnStartup": false,
+    "supportedOS": "windows|mac",
+    "editEnabled": true
 }
