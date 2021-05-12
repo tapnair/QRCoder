@@ -130,7 +130,7 @@ def make_qr_from_message(input_values):
     if error_type != 'Automatic':
         args['error'] = error_type
 
-    check_dependency('pyqrcode', config.lib_path)
+    apper.check_dependency('pyqrcode', config.lib_path)
     qr_data = build_qr_code(message, args)
     return qr_data
 
