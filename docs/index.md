@@ -1,37 +1,89 @@
-## Welcome to GitHub Pages
+QRCoder
+=======
 
-You can use the [editor on GitHub](https://github.com/tapnair/QRCoder/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+QR Code Generator for Fusion 360
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+![image](../resources/readMeCover.png)
 
-### Markdown
+Usage
+-----
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Select a sketch point and insert a 3D QR code.
 
-```markdown
-Syntax highlighted code block
+You can either generate a QR code from an input string with various options or you can import a csv file.
 
-# Header 1
-## Header 2
-### Header 3
+### Create QR Code
 
-- Bulleted
-- List
+This command will generate a QR code from the input message. It is based on the **PyQRCode** Package. 
+See the [full PyQRCode documentation](https://pythonhosted.org/PyQRCode/) 
+for a detailed description of the available encoding options.
 
-1. Numbered
-2. List
+![image](../resources/create_qr_dialog.png)
 
-**Bold** and _Italic_ and `Code` text
+In general you select a sketch point for the center then define the block size and the height. 
+The different options determine exactly how the QR code will be constructed.
 
-[Link](url) and ![Image](src)
-```
+### Import QR Code
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+This command allows you to import a QR code generated via another program.
 
-### Jekyll Themes
+![image](../resources/import_qr_dialog.png)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/tapnair/QRCoder/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+The data should be formatted as a csv file. 
+Each row of the file corresponds to a row of block data in the resulting QR code. 
+The format should be 1's and 0's. A value of 1 indicates that the block should be created for this position.
 
-### Support or Contact
+Installation
+------------
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+-   [Download or clone the latest version](https://github.com/tapnair/QRCoder/archive/refs/heads/master.zip)
+-   Unzip the archive to a permanent location on your computer
+-   It is important that the directory be named *QRCoder*.
+
+*Note: If you are downloading the zip file from github it typically appends -master to the folder name. 
+You must rename the folder for Fusion 360 to recognize the addin.*
+
+![image](../resources/install.png)
+
+After you download and extract the zip file:
+
+1.  Open the scripts and add-ins dialog box
+2.  Select the add-ins tab in the top of the dialog
+3.  Click the little green plus button to add the add-in
+4.  Select the directory named Export2D and click the open button
+5.  With it selected click the run button at the bottom of the dialog
+
+### Requirements
+
+Credit where credit is due!!!
+
+This sample add-in is built upon the [pyqrcode library](https://github.com/mnooner256/pyqrcode)
+
+The first time you run the application, depending how you downloaded it, 
+you may be prompted to install a couple of dependencies:
+
+The required dependency **PyQRCode** from the standard python package index: PyPI
+
+![image](../resources/dependency.png)
+
+A Git submodule downloaded from github:
+
+![image](../resources/apper-dependency.png)
+
+License
+-------
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+[MIT License](../LICENSE)
+
+Authors
+-------
+
+QRCoder was written by [Patrick Rainsberry](patrick.rainsberry@autodesk.com).
+
+See more useful [Fusion 360 Utilities](https://tapnair.github.io/index.html)
