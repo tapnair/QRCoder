@@ -1,12 +1,15 @@
 QRCoder
 =======
-3D QR code geometry generator for Fusion 360
+Generate 3D geometry for a QR Code.
+Import data as a csv file or directly generate the QR code from within the app.
 
 .. image:: docs/resources/readMeCover.png
 
 |
 
 `Pretty Documentation available on Github pages <https://tapnair.github.io/QRCoder/>`_
+
+.. image:: docs/resources/tapnair_github_io_QRCoder.png
 
 Usage
 -----
