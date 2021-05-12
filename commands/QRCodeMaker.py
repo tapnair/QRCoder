@@ -56,7 +56,7 @@ from .. import config
 BLOCK = '.5 in'
 HEIGHT = '.25 in'
 BASE = '.25 in'
-MESSAGE = 'https://www.autodesk.com/products/fusion-360/overview'
+MESSAGE = 'https://tapnair.github.io/QRCoder/'
 
 # File assumed to be in script root directory
 FILE_NAME = 'QR-17x.csv'
@@ -208,7 +208,6 @@ def add_make_inputs(inputs: adsk.core.CommandInputs):
 
 
 def add_csv_inputs(inputs: adsk.core.CommandInputs):
-    default_file_name = os.path.join(os.path.dirname(os.path.abspath(__file__)), FILE_NAME)
     inputs.addStringValueInput('file_name', "File to import", '')
 
     browse_button = inputs.addBoolValueInput('browse', 'Browse', False, '', False)
