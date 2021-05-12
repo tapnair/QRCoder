@@ -12,9 +12,9 @@ You can either generate a QR code from an input string with various options or y
 
 Create QR Code
 ^^^^^^^^^^^^^^
-This command will generate a QR code from the input message.  It is based on the
-`pyqrcode library <https://github.com/mnooner256/pyqrcode>`_
-library.  See the full documentation there for a detailed description of the available options.
+This command will generate a QR code from the input message.  It is based on the **PyQRCode** Package.
+See the `full PyQRCode documentation <https://pythonhosted.org/PyQRCode/>`_
+for a detailed description of the available encoding options.
 
 .. image:: resources/create_qr_dialog.png
 
@@ -44,7 +44,6 @@ You must rename the folder for Fusion 360 to recognize the addin.*
 
 .. image:: resources/install.png
 
-
 After you download and extract the zip file:
 
 1.	Open the scripts and add-ins dialog box
@@ -53,22 +52,22 @@ After you download and extract the zip file:
 4.	Select the directory named Export2D and click the open button
 5.	With it selected click the run button at the bottom of the dialog
 
-The first time you run the application, depending how you downloaded it,
-you may be prompted to install a couple of dependencies:
-
-.. image:: resources/dependency.png
-
-.. image:: resources/apper-dependency.png
-
 Requirements
 ^^^^^^^^^^^^
 Credit where credit is due!!!
 
 This sample add-in is built upon the `pyqrcode library <https://github.com/mnooner256/pyqrcode>`_
 
-What I have done is that when you attempt to use my add-in for the first time it will download the required dependencies from the standard python package index: PyPI
+The first time you run the application, depending how you downloaded it,
+you may be prompted to install a couple of dependencies:
+
+The required dependency **PyQRCode** from the standard python package index: PyPI
 
 .. image:: resources/dependency.png
+
+A Git submodule downloaded from github:
+
+.. image:: resources/apper-dependency.png
 
 License
 -------
