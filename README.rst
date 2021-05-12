@@ -1,8 +1,12 @@
 QRCoder
 =======
-QR  Code Generator for Fusion 360
+3D QR code geometry generator for Fusion 360
 
 .. image:: docs/resources/readMeCover.png
+
+|
+
+`Pretty Documentation available on Github pages <hhttps://tapnair.github.io/QRCoder/>`_
 
 Usage
 -----
