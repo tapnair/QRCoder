@@ -6,3 +6,4 @@ __pycache__/
 venv
 lib/*
 !lib/Place_3rd_Party_libraries_here.txt
+.env
