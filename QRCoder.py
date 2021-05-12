@@ -1,10 +1,11 @@
 import adsk.core
 import traceback
 
-import os
+from . import config
+from .utils import check_apper
+check_apper()
 
 try:
-    from . import config
     from .apper import apper
     from .commands.QRCodeMaker import QRCodeMaker
 

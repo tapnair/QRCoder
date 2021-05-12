@@ -130,9 +130,11 @@ def make_qr_from_message(input_values):
     if error_type != 'Automatic':
         args['error'] = error_type
 
-    apper.check_dependency('pyqrcode', config.lib_path)
-    qr_data = build_qr_code(message, args)
-    return qr_data
+    success = apper.check_dependency('pyqrcode', config.lib_path)
+
+    if success:
+        qr_data = build_qr_code(message, args)
+        return qr_data
 
 
 def add_make_inputs(inputs: adsk.core.CommandInputs):
