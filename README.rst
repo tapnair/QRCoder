@@ -6,7 +6,7 @@ QRCoder
 
 |
 
-`Pretty Documentation available on Github pages <hhttps://tapnair.github.io/QRCoder/>`_
+`Pretty Documentation available on Github pages <https://tapnair.github.io/QRCoder/>`_
 
 Usage
 -----
