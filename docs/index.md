@@ -3,7 +3,7 @@ QRCoder
 
 QR Code Generator for Fusion 360
 
-![image](resources/readMeCover.png)
+![image](./resources/readMeCover.png)
 
 Usage
 -----
@@ -19,7 +19,7 @@ This command will generate a QR code from the input message. It is based on the 
 See the [full PyQRCode documentation](https://pythonhosted.org/PyQRCode/) 
 for a detailed description of the available encoding options.
 
-![image](resources/create_qr_dialog.png)
+![image](./resources/create_qr_dialog.png)
 
 In general you select a sketch point for the center then define the block size and the height. 
 The different options determine exactly how the QR code will be constructed.
@@ -28,7 +28,7 @@ The different options determine exactly how the QR code will be constructed.
 
 This command allows you to import a QR code generated via another program.
 
-![image](resources/import_qr_dialog.png)
+![image](./resources/import_qr_dialog.png)
 
 The data should be formatted as a csv file. 
 Each row of the file corresponds to a row of block data in the resulting QR code. 
@@ -44,7 +44,7 @@ Installation
 *Note: If you are downloading the zip file from github it typically appends -master to the folder name. 
 You must rename the folder for Fusion 360 to recognize the addin.*
 
-![image](resources/install.png)
+![image](./resources/install.png)
 
 After you download and extract the zip file:
 
@@ -65,11 +65,11 @@ you may be prompted to install a couple of dependencies:
 
 The required dependency **PyQRCode** from the standard python package index: PyPI
 
-![image](resources/dependency.png)
+![image](./resources/dependency.png)
 
 A Git submodule downloaded from github:
 
-![image](resources/apper-dependency.png)
+![image](./resources/apper-dependency.png)
 
 License
 -------
