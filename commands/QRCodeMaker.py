@@ -62,16 +62,24 @@ MESSAGE = 'https://tapnair.github.io/QRCoder/'
 FILE_NAME = 'QR-17x.csv'
 
 
-def make_real_geometry(component: adsk.fusion.Component, t_body: adsk.fusion.BRepBody):
+def make_real_geometry(target_body: adsk.fusion.BRepBody, t_body: adsk.fusion.BRepBody):
+    ao = apper.AppObjects()
+
+    if target_body is None:
+        component = ao.design.activeComponent
+    else:
+        component = target_body.parentComponent
+
     base_feature = component.features.baseFeatures.add()
     base_feature.startEdit()
     component.bRepBodies.add(t_body, base_feature)
     base_feature.finishEdit()
 
-    tools = adsk.core.ObjectCollection.create()
-    tools.add(base_feature.bodies.item(0))
-    combine_input = component.features.combineFeatures.createInput(component.bRepBodies.item(0), tools)
-    component.features.combineFeatures.add(combine_input)
+    if target_body is not None:
+        tools = adsk.core.ObjectCollection.create()
+        tools.add(base_feature.bodies.item(0))
+        combine_input = component.features.combineFeatures.createInput(component.bRepBodies.item(0), tools)
+        component.features.combineFeatures.add(combine_input)
 
 
 def clear_graphics(graphics_group: adsk.fusion.CustomGraphicsGroup):
@@ -98,21 +106,39 @@ def get_qr_temp_geometry(qr_data, input_values):
     x_dir.normalize()
     y_dir = sketch_point.parentSketch.yDirection
     y_dir.normalize()
+    z_dir = x_dir.crossProduct(y_dir)
+    z_dir.normalize()
 
     qr_size = len(qr_data)
     middle_point = sketch_point.worldGeometry
     start_point = middle_point.copy()
+
     x_start_move = x_dir.copy()
     x_start_move.scaleBy((.5 * side) * (1 - qr_size))
     start_point.translateBy(x_start_move)
+
     y_start_move = y_dir.copy()
     y_start_move.scaleBy((.5 * side) * (qr_size - 1))
     start_point.translateBy(y_start_move)
 
+    z_start_move = z_dir.copy()
+    z_start_move.scaleBy((.5 * height) + base)
+    start_point.translateBy(z_start_move)
+
+    base_point = middle_point.copy()
+    z_base_move = z_dir.copy()
+    z_base_move.scaleBy((.5 * base))
+    base_point.translateBy(z_base_move)
+
     b_mgr = adsk.fusion.TemporaryBRepManager.get()
-    full_size = side * qr_size
-    base_t_box = adsk.core.OrientedBoundingBox3D.create(middle_point, x_dir, y_dir, full_size, full_size, base)
-    base_t_body = b_mgr.createBox(base_t_box)
+
+    has_base = True
+    if base > 0:
+        full_size = side * qr_size
+        base_t_box = adsk.core.OrientedBoundingBox3D.create(base_point, x_dir, y_dir, full_size, full_size, base)
+        base_t_body = b_mgr.createBox(base_t_box)
+    else:
+        has_base = False
 
     for i, row in enumerate(qr_data):
         for j, col in enumerate(row):
@@ -128,7 +154,12 @@ def get_qr_temp_geometry(qr_data, input_values):
 
                 b_box = adsk.core.OrientedBoundingBox3D.create(c_point, x_dir, y_dir, side, side, height + base)
                 t_body = b_mgr.createBox(b_box)
-                b_mgr.booleanOperation(base_t_body, t_body, adsk.fusion.BooleanTypes.UnionBooleanType)
+
+                if not has_base:
+                    base_t_body = t_body
+                    has_base = True
+                else:
+                    b_mgr.booleanOperation(base_t_body, t_body, adsk.fusion.BooleanTypes.UnionBooleanType)
 
     return base_t_body
 
@@ -256,10 +287,11 @@ class QRCodeMaker(apper.Fusion360CommandBase):
 
     def on_preview(self, command, inputs, args, input_values):
         if self.make_preview:
+            ao = apper.AppObjects()
+
             qr_data = []
             if self.is_make_qr:
                 qr_data = make_qr_from_message(input_values)
-
             else:
                 file_name = input_values['file_name']
                 if len(file_name) > 0:
@@ -268,12 +300,18 @@ class QRCodeMaker(apper.Fusion360CommandBase):
             if len(qr_data) > 0:
                 t_body = get_qr_temp_geometry(qr_data, input_values)
 
-                # TODO maybe this should be an option?
                 sketch_point: adsk.fusion.SketchPoint = input_values['sketch_point'][0]
-                target_component = sketch_point.parentSketch.parentComponent
+
+                target_collection = ao.root_comp.findBRepUsingPoint(
+                    sketch_point.worldGeometry, adsk.fusion.BRepEntityTypes.BRepBodyEntityType, -1.0, True
+                )
+                if target_collection.count > 0:
+                    target_body: adsk.fusion.BRepBody = target_collection.item(0)
+                else:
+                    target_body = None
 
                 # TODO Why is custom graphics so slow?
-                make_real_geometry(target_component, t_body)
+                make_real_geometry(target_body, t_body)
                 # make_graphics(t_body, self.graphics_group)
                 args.isValidResult = True
 
@@ -305,7 +343,7 @@ class QRCodeMaker(apper.Fusion360CommandBase):
 
         inputs.addValueInput('block_size', 'QR Block Size', default_units, default_block_size)
         inputs.addValueInput('block_height', 'QR Block Height', default_units, default_block_height)
-        inputs.addValueInput('base_height', 'Base Height', default_units, default_base_height)
+        inputs.addValueInput('base_height', 'Base Height (Can be zero)', default_units, default_base_height)
 
         group_input = inputs.addGroupCommandInput('group', 'QR Code Definition')
 
