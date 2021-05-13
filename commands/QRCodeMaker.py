@@ -62,7 +62,19 @@ MESSAGE = 'https://tapnair.github.io/QRCoder/'
 FILE_NAME = 'QR-17x.csv'
 
 
-def make_real_geometry(target_body: adsk.fusion.BRepBody, t_body: adsk.fusion.BRepBody):
+def get_target_body(sketch_point):
+    ao = apper.AppObjects()
+    target_collection = ao.root_comp.findBRepUsingPoint(
+        sketch_point.worldGeometry, adsk.fusion.BRepEntityTypes.BRepBodyEntityType, -1.0, True
+    )
+
+    if target_collection.count > 0:
+        return target_collection.item(0)
+    else:
+        return None
+
+
+def make_real_geometry(target_body: adsk.fusion.BRepBody, temp_body: adsk.fusion.BRepBody):
     ao = apper.AppObjects()
 
     if target_body is None:
@@ -72,7 +84,7 @@ def make_real_geometry(target_body: adsk.fusion.BRepBody, t_body: adsk.fusion.BR
 
     base_feature = component.features.baseFeatures.add()
     base_feature.startEdit()
-    component.bRepBodies.add(t_body, base_feature)
+    component.bRepBodies.add(temp_body, base_feature)
     base_feature.finishEdit()
 
     if target_body is not None:
@@ -298,20 +310,12 @@ class QRCodeMaker(apper.Fusion360CommandBase):
                     qr_data = import_qr_from_file(file_name)
 
             if len(qr_data) > 0:
-                t_body = get_qr_temp_geometry(qr_data, input_values)
+                temp_body = get_qr_temp_geometry(qr_data, input_values)
 
-                sketch_point: adsk.fusion.SketchPoint = input_values['sketch_point'][0]
-
-                target_collection = ao.root_comp.findBRepUsingPoint(
-                    sketch_point.worldGeometry, adsk.fusion.BRepEntityTypes.BRepBodyEntityType, -1.0, True
-                )
-                if target_collection.count > 0:
-                    target_body: adsk.fusion.BRepBody = target_collection.item(0)
-                else:
-                    target_body = None
+                target_body = get_target_body(input_values['sketch_point'][0])
 
                 # TODO Why is custom graphics so slow?
-                make_real_geometry(target_body, t_body)
+                make_real_geometry(target_body, temp_body)
                 # make_graphics(t_body, self.graphics_group)
                 args.isValidResult = True
 
